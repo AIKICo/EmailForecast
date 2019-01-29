@@ -11,6 +11,7 @@ def return_cmap(data):
 
 
 if __name__=="__main__":
+    sns.set()
     weekdays = [calendar.day_name[i] for i in range(7)]
 
     mail_df = pd.read_csv("myEmails.csv")
@@ -28,6 +29,10 @@ if __name__=="__main__":
 
     # E-Mails per day
     per_day = pd.DataFrame(mail_df["Subject"].resample("d").count())
+
+    per_month = pd.DataFrame(mail_df["Subject"].resample("m").count())
+    print(per_month.tail())
+
     per_day_week = (
         per_day.groupby([per_day.index.weekday]).sum()
         / per_day.groupby([per_day.index.weekday]).count()
@@ -36,13 +41,18 @@ if __name__=="__main__":
     per_day_week.columns = ["Weekday", "Count"]
     per_day_week["Weekday"] = weekdays
 
+    per_day.reset_index(inplace=True)
+    per_day.columns = ["Date", "Count"]
+
     plt.figure(figsize=(14, 12))
-    plt.subplot(2, 1, 1)
+
+    plt.subplot(3, 1, 1)
     cmap = return_cmap(per_hour_day)
     sns.barplot(x="Hour", y="Count", data=per_hour_day)
     plt.title("Emails per hour")
 
-    plt.subplot(2, 1, 2)
+
+    plt.subplot(3, 1, 3)
     cmap = return_cmap(per_day_week)
     sns.barplot(x="Weekday", y="Count", data=per_day_week)
     plt.title("Emails per weekday")
