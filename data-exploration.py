@@ -36,15 +36,15 @@ if __name__=="__main__":
     per_day_week.columns = ["Weekday", "Count"]
     per_day_week["Weekday"] = weekdays
 
-    plt.figure(figsize=(12, 10), dpi=600)
+    plt.figure(figsize=(14, 12))
     plt.subplot(2, 1, 1)
     cmap = return_cmap(per_hour_day)
-    sns.barplot(x="Hour", y="Count", data=per_hour_day, palette=cmap)
+    sns.barplot(x="Hour", y="Count", data=per_hour_day)
     plt.title("Emails per hour")
 
     plt.subplot(2, 1, 2)
     cmap = return_cmap(per_day_week)
-    sns.barplot(x="Weekday", y="Count", data=per_day_week, palette=cmap)
+    sns.barplot(x="Weekday", y="Count", data=per_day_week)
     plt.title("Emails per weekday")
 
     plt.show()
