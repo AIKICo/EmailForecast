@@ -30,9 +30,6 @@ if __name__=="__main__":
     # E-Mails per day
     per_day = pd.DataFrame(mail_df["Subject"].resample("d").count())
 
-    per_month = pd.DataFrame(mail_df["Subject"].resample("m").count())
-    print(per_month.tail())
-
     per_day_week = (
         per_day.groupby([per_day.index.weekday]).sum()
         / per_day.groupby([per_day.index.weekday]).count()
